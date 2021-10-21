@@ -40,6 +40,7 @@
 #   $ ./cloakify.py payload.txt ciphers/desserts > exfiltrate.txt
 # 
 
+import argparse
 import base64
 import os
 import random
@@ -100,10 +101,11 @@ def Cloakify(payloadPath:str, cipherPath:str, outputPath:str="", password:str=No
 
 
 if __name__ == "__main__":
-	if len(sys.argv) == 3:
-		Cloakify( sys.argv[1], sys.argv[2])
-	elif len(sys.argv) == 4:
-		Cloakify(sys.argv[1], sys.argv[2], sys.argv[3])
-	else:
-		print("usage: cloakify.py <payloadFilename> <cipherFilename> <outputFileName-optional>")
-		exit(-1)
+	parser = argparse.ArgumentParser(description='Transform file into obfuscated text file.')
+	parser.add_argument('-i', "--input", type=str, help='Payload File Path', required=True)
+	parser.add_argument('-c', "--cipher", type=str, help='Cipher File Path', required=True)
+	parser.add_argument('-o', "--output", type=str, help='Output File Path', default="")
+	parser.add_argument('-p', "--password", type=str, help='Password', default=None)
+	args = parser.parse_args()
+
+	Cloakify(args.input, args.cipher, args.output, args.password)
