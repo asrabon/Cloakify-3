@@ -26,6 +26,7 @@
 #
 #   $ ./decloakify.py cloakedPayload.txt ciphers/desserts.ciph 
 
+import argparse
 import base64
 import random
 import sys
@@ -73,10 +74,11 @@ def Decloakify(cloakedPath:str, cipherPath:str, outputPath:str="", password:str=
 
 
 if __name__ == "__main__":
-	if len(sys.argv) == 3:
-		Decloakify(sys.argv[1], sys.argv[2])
-	elif len(sys.argv) == 4:
-		Decloakify(sys.argv[1], sys.argv[2], sys.argv[3])
-	else:
-		print("usage: decloakify.py <cloakedFilename> <cipherFilename> <outputFileName-optional>")
-		exit(-1)
+	parser = argparse.ArgumentParser(description='Transform file into unobfuscated text file.')
+	parser.add_argument('-i', "--input", type=str, help='Cloaked File Path', required=True)
+	parser.add_argument('-c', "--cipher", type=str, help='Cipher File Path', required=True)
+	parser.add_argument('-o', "--output", type=str, help='Output File Path', default="")
+	parser.add_argument('-p', "--password", type=str, help='Password', default=None)
+	args = parser.parse_args()
+
+	Decloakify(args.input, args.cipher, args.output, args.password)
