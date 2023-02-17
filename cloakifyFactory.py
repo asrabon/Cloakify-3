@@ -46,6 +46,8 @@ import os
 import random
 import sys
 
+from werkzeug.utils import secure_filename
+
 # Local Python Imports
 import cloakify
 import decloakify
@@ -105,7 +107,7 @@ def CloakifyFile():
 	print(f"Creating cloaked file using cipher: {cipherPath}")
 
 	try:
-		cloakify.Cloakify(sourceFile, os.path.join(".", "ciphers", cipherPath), cloakedFile, password)
+		cloakify.Cloakify(secure_filename(sourceFile), os.path.join(".", "ciphers", cipherPath), cloakedFile, password)
 	except:
 		print("")
 		print("!!! Well that didn't go well. Verify that your cipher is in the 'ciphers/' subdirectory.")
