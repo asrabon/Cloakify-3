@@ -161,7 +161,7 @@ def DecloakifyFile():
 	if choice == "y":
 		print("")
 		try:
-			with open(sourceFile, encoding="utf-8") as file:
+			with open(secure_filename(sourceFile), encoding="utf-8") as file:
 				for _ in range(20):
 					print(file.readline())
 			print("")
